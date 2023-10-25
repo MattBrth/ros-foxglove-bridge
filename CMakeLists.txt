@@ -18,15 +18,22 @@ macro(enable_strict_compiler_warnings target)
   if (MSVC)
     target_compile_options(${target} PRIVATE /WX /W4)
   elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic -Werror -Wold-style-cast -Wfloat-equal -Wmost -Wunused-exception-parameter)
+    target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic -Werror -Wfloat-equal -Wmost -Wunused-exception-parameter)
   else()
-    target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic -Werror -Wold-style-cast -Wfloat-equal)
+    target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic -Werror -Wfloat-equal)
   endif()
 endmacro()
 
 find_package(nlohmann_json QUIET)
 find_package(OpenSSL REQUIRED)
 find_package(Threads REQUIRED)
+set(CMAKE_PREFIX_PATH 
+    ${CMAKE_PREFIX_PATH}
+    "/usr/lib/x86_64-linux-gnu/cmake/"
+    "/usr/lib/aarch64-linux-gnu/cmake/"
+)
+# Include additional directories as needed
+include_directories(/usr/local/include)
 find_package(websocketpp REQUIRED)
 find_package(ZLIB REQUIRED)
 
@@ -81,6 +88,7 @@ target_include_directories(foxglove_bridge_base
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/foxglove_bridge_base/include>
     $<INSTALL_INTERFACE:include>
 )
+#target_include_directories(foxglove_bridge_base SYSTEM PUBLIC ${WEBSOCKETPP_INCLUDE_DIR} /usr/local/include)
 target_link_libraries(foxglove_bridge_base
   OpenSSL::Crypto
   OpenSSL::SSL
