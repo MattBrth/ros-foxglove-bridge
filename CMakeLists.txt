@@ -88,7 +88,7 @@ target_include_directories(foxglove_bridge_base
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/foxglove_bridge_base/include>
     $<INSTALL_INTERFACE:include>
 )
-#target_include_directories(foxglove_bridge_base SYSTEM PUBLIC ${WEBSOCKETPP_INCLUDE_DIR} /usr/local/include)
+target_include_directories(foxglove_bridge_base SYSTEM PUBLIC ${WEBSOCKETPP_INCLUDE_DIR} /usr/local/include)
 target_link_libraries(foxglove_bridge_base
   OpenSSL::Crypto
   OpenSSL::SSL
